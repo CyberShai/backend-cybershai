@@ -2,7 +2,6 @@ import config from '../config';
 import { createPool, Pool } from "mysql";
 
 let pool: Pool;
-
 const getPool = () => {
   if (pool)
     return pool;
@@ -11,10 +10,8 @@ const getPool = () => {
     host: config.mysql.host,
     user: config.mysql.user,
     password: config.mysql.password,
+    database: config.mysql.database
   });
-
-
-  console.log("Database connected");
 
   return pool;
 };
