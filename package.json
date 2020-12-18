@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ENV_FILE_PATH='../../.env.prod' node dist",
     "start:dev": "ENV_FILE_PATH='../../.env' nodemon",
+    "start:staging": "ENV_FILE_PATH='../../.env.staging' node dist",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "ENV_FILE_PATH='../../.env' jest",
