@@ -23,6 +23,10 @@ const form = {
     const isInvalid = Number.isNaN(Number.parseInt(value, 10));
     validateError(name, isInvalid, errors);
   },
+  positive: (name: string, value: any, errors: string[]) => {
+    const isInvalid = Number.isNaN(Number.parseInt(value, 10)) || Number.parseInt(value, 10) <= 0;
+    validateError(name, isInvalid, errors);
+  },
   email: (name: string, value: string, errors: string[]) => {
     const isInvalid = !EMAIL_REGEX.test(value);
     validateError(name, isInvalid, errors);
