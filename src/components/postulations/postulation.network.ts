@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction, Router } from 'express';
+import express, { Request, Response, NextFunction, Router } from 'express';
 import response from '../../network/response.network';
-import controller from './vacancy.controller';
-import { IVacancy } from './vacancy.interface';
+import controller from './postulation.controller';
+import { IPostulation } from './postulation.interface';
 
 const router = Router();
 
@@ -34,12 +34,11 @@ function list() {
   };
 }
 
-
 function create() {
   return (req: Request, res: Response, next: NextFunction) => {
-    const iVacancy: IVacancy = JSON.parse(req.body.vacancy);
+    const iPostulation: IPostulation = JSON.parse(req.body.postulation);
     controller
-      .create(iVacancy)
+      .create(iPostulation)
       .then(({ data, code, status }) => {
         response.create(res, data, code, status);
       })
@@ -50,9 +49,9 @@ function create() {
 function patch() {
   return (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const iVacancy: IVacancy = JSON.parse(req.body.vacancy);
+    const iPostulation: IPostulation = JSON.parse(req.body.postulation);
     controller
-      .patch(id, iVacancy)
+      .patch(id, iPostulation)
       .then(({ data, code, status }) => {
         response.create(res, data, code, status);
       })
