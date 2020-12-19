@@ -1,20 +1,52 @@
+import mongoose from 'mongoose';
+import sanitize from 'express-mongo-sanitize';
+import express from 'express';
+
 import config from '../config';
-import { createPool, Pool } from "mysql";
 
-let pool: Pool;
-const getPool = () => {
-  if (pool)
-    return pool;
+import { MongoError } from 'mongodb';
 
-  pool = createPool({
-    host: config.mysql.host,
-    user: config.mysql.user,
-    password: config.mysql.password,
-    database: config.mysql.database
-  });
-
-  return pool;
+const mongoOptions: mongoose.ConnectionOptions = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: true
 };
 
+const connect = (app: express.Application) => {
+  mongoose.connect(config.mongo.uri, mongoOptions)
+    .then(() => {
+      setSanitizer(app);
+      console.log('Base de datos online');
+    })
+    .catch((err) => {
+      console.log('No hay conexión con la base de datos');
+    });
+};
 
-export default { getPool };
+const onlyConnect = () => {
+  mongoose.connect(config.mongo.uri, mongoOptions)
+    .then(() => {
+      console.log('Base de datos online');
+    })
+    .catch((err) => {
+      console.log('No hay conexión con la base de datos');
+    });
+};
+
+const disconnect = () => {
+  mongoose.disconnect()
+    .then((result) => {
+      // console.log('Desconectado');
+    })
+    .catch((err: MongoError) => {
+      // console.log({ err });
+    });
+
+};
+
+const setSanitizer = (app: express.Application) => {
+  app.use(sanitize({ replaceWith: '_' }))
+}
+
+export default { connect, disconnect, onlyConnect }

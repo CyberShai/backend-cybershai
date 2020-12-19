@@ -49,7 +49,7 @@ export default class Server {
   }
 
   private setDatabase() {
-    db.getPool();
+    db.connect(this.app);
   }
 
   private setRoutes() {

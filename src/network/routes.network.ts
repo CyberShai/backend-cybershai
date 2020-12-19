@@ -1,10 +1,10 @@
 // Express instance
 import express from 'express';
 // Routes
-import testComponent from '../components/test/test-component.network';
+import studentNetwork from '../components/student/student.network';
 
 const routes = (server: express.Application) => {
-  server.use("/test", testComponent);
+  server.use("/student", studentNetwork);
 }
 
 export default routes;
