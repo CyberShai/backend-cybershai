@@ -1,4 +1,7 @@
 import Model from './student.model';
+import CohortModel from '../cohort/cohort.model';
+import CoachTpModel from '../coach-tp/coach-tp.model';
+
 import genericValidators from '../../utils/validators.utils';
 
 import { IStudent } from './student.interface';
@@ -7,7 +10,8 @@ const get = async (_id: string) => {
   try {
     const student: any = await Model
       .findOne({ _id, active: true })
-      //.populate TODO: agregar populate
+      .populate("cohort", "_id name", CohortModel)
+      .populate("coach_tp", "_id name", CoachTpModel)
       .exec();
     if (student) {
       const result: IStudent = { ...student._doc };
@@ -36,7 +40,7 @@ const create = async (iStudent: IStudent) => {
 }
 
 const list = async (query: any) => {
-  try {
+  try {    
     // const filters = getFilters(query) TODO: agregar filtros
     const students: any[] = await Model
       .find({ active: true })
@@ -44,7 +48,8 @@ const list = async (query: any) => {
       //.sort(filters.sort)
       //.skip(filters.skip)
       //.limit(filters.limit)
-      //.populate("Portfolio", "_id Path Tags PreviewImage Created", PortfolioModel)
+      .populate("cohort", "_id name", CohortModel)
+      .populate("coach_tp", "_id name", CoachTpModel)
       .exec();
 
     const length = await Model

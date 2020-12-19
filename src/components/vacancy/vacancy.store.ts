@@ -1,4 +1,7 @@
 import Model from './vacancy.model';
+import VacancyCategoryModel from '../vacancy-category/vacancy-category.model';
+import CompanyModel from '../company/company.model';
+
 import genericValidators from '../../utils/validators.utils';
 
 import { IVacancy } from './vacancy.interface';
@@ -7,7 +10,8 @@ const get = async (_id: string) => {
   try {
     const vacancy: any = await Model
       .findOne({ _id, active: true })
-      //.populate TODO: agregar populate
+      .populate("vacancy_category", "_id name", VacancyCategoryModel)
+      .populate("company", "_id name", CompanyModel)
       .exec();
     if (vacancy) {
       const result: IVacancy = { ...vacancy._doc };
@@ -44,7 +48,8 @@ const list = async (query: any) => {
       //.sort(filters.sort)
       //.skip(filters.skip)
       //.limit(filters.limit)
-      //.populate("Portfolio", "_id Path Tags PreviewImage Created", PortfolioModel)
+      .populate("vacancy_category", "_id name", VacancyCategoryModel)
+      .populate("company", "_id name", CompanyModel)
       .exec();
 
     const length = await Model

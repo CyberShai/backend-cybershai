@@ -1,4 +1,5 @@
 import Model from './postulation-closed.model';
+import PostulationModel from '../postulations/postulation.model';
 import genericValidators from '../../utils/validators.utils';
 
 import { IPostulationClosed } from './postulation-closed.interface';
@@ -7,9 +8,9 @@ const get = async (_id: string) => {
   try {
     const postulationClosed: any = await Model
       .findOne({ _id, active: true })
-      //.populate TODO: agregar populate
+      .populate("postulation", "_id hired", PostulationModel)
       .exec();
-    if (postulationClosed) {
+    if (postulationClosed) {      
       const result: IPostulationClosed = { ...postulationClosed._doc };
       return result;
     }
@@ -44,7 +45,7 @@ const list = async (query: any) => {
       //.sort(filters.sort)
       //.skip(filters.skip)
       //.limit(filters.limit)
-      //.populate("Portfolio", "_id Path Tags PreviewImage Created", PortfolioModel)
+      .populate("postulation", "_id hired", PostulationModel)
       .exec();
 
     const length = await Model

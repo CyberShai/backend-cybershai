@@ -31,6 +31,10 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  tags: [{
+    type: String,
+    required: true
+  }],
   created: {
     type: Date,
     required: true

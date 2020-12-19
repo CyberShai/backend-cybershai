@@ -7,6 +7,7 @@ export interface IVacancy {
   responsibilities: string;
   min_salary: number;
   max_salary: number;
+  tags: string[];
   created: Date;
   modified: Date;
   active: boolean;

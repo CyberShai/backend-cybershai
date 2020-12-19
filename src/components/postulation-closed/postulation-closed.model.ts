@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const schema = new mongoose.Schema({
   postulation: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Postulations',
+    ref: 'Postulation',
     required: true
   },
   salary: {

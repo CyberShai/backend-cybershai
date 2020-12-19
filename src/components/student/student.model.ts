@@ -39,6 +39,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  interests: [{
+    type: String,
+    required: true
+  }],
   created: {
     type: Date,
     required: true

@@ -10,6 +10,7 @@ export interface IStudent {
   github: string;
   linkedin: string;
   photo: string;
+  interests: string[];
   created: Date;
   modified: Date;
   active: boolean;

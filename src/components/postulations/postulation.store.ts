@@ -1,13 +1,22 @@
 import Model from './postulation.model';
+import StudentModel from '../student/student.model';
+import VacancyModel from '../vacancy/vacancy.model';
+import PostulationStatusModel from '../postulation-status/postulation-status.model';
+
 import genericValidators from '../../utils/validators.utils';
 
 import { IPostulation } from './postulation.interface';
 
 const get = async (_id: string) => {
   try {
+    
+    
+    
     const postulation: any = await Model
       .findOne({ _id, active: true })
-      //.populate TODO: agregar populate
+      .populate("student", "_id first_name last_name email", StudentModel)
+      .populate("vacant", "_id name", VacancyModel)
+      .populate("postulation_status", "_id status", PostulationStatusModel)
       .exec();
     if (postulation) {
       const result: IPostulation = { ...postulation._doc };
@@ -36,7 +45,7 @@ const create = async (iPostulation: IPostulation) => {
 }
 
 const list = async (query: any) => {
-  try {
+  try {            
     // const filters = getFilters(query) TODO: agregar filtros
     const postulation: any[] = await Model
       .find({ active: true })
@@ -44,7 +53,9 @@ const list = async (query: any) => {
       //.sort(filters.sort)
       //.skip(filters.skip)
       //.limit(filters.limit)
-      //.populate("Portfolio", "_id Path Tags PreviewImage Created", PortfolioModel)
+      .populate("student", "_id first_name last_name email", StudentModel)
+      .populate("vacant", "_id name", VacancyModel)
+      .populate("postulation_status", "_id status", PostulationStatusModel)
       .exec();
 
     const length = await Model
