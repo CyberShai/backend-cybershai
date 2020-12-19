@@ -40,9 +40,9 @@ export default class Server {
 
   public init(cb: any) {
     this.setEncoded();
+    this.setCors();
     this.setDatabase();
     this.setRoutes();
-    this.setCors();
     this.setPublicFolder();
     this.setCompression();
     this.httpServer.listen(this.port, cb);
@@ -62,7 +62,11 @@ export default class Server {
   }
 
   private setCors() {
-    this.app.use(cors({ origin: true, credentials: true }));
+    this.app.use(function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
   }
 
   private setPublicFolder() {
